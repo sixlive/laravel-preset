@@ -78,6 +78,7 @@ class Preset extends BasePreset
         $editor->load(base_path('.env.example'));
         $editor->set('DB_PORT', '3307');
         $editor->set('SENTRY_DSN', '');
+        $editor->addEmptyLine();
         $editor->heading('Docker');
         $editor->set('DOCKER_WEB_PORT', '8080');
         $editor->set('DOCKER_MYSQL_PORT', '3307');
