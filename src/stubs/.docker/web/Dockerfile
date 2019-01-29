@@ -22,6 +22,8 @@ RUN groupadd -g 999 deploy \
     && chmod +x /usr/local/bin/run.sh
 
 USER deploy
+EXPOSE 80
+EXPOSE 443
 WORKDIR /var/www/html
 
 CMD ["/usr/local/bin/run.sh"]
