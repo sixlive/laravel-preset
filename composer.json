@@ -1,0 +1,52 @@
+{
+    "name": "sixlive/laravel-preset",
+    "description": "My Laravel application preset",
+    "keywords": [
+        "sixlive",
+        "laravel-preset"
+    ],
+    "homepage": "https://github.com/sixlive/laravel-preset",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "TJ Miller",
+            "email": "oss@tjmiller.co",
+            "homepage": "https://tjmiller.me",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "laravel/framework": "^5.7",
+        "nunomaduro/laravel-console-task": "^1.2",
+        "sixlive/dotenv-editor": "^1.1"
+    },
+    "require-dev": {
+        "larapack/dd": "^1.0",
+        "phpunit/phpunit": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "sixlive\\LaravelPreset\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "sixlive\\LaravelPreset\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "sixlive\\LaravelPreset\\LaravelPresetServiceProvider"
+            ]
+        }
+    }
+}
