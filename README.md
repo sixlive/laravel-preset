@@ -8,6 +8,7 @@ I figured rather than having a base repository with Laravel already installed it
 - `bensampo/laravel-enum`
 - `silber/bouncer:v1.0.0-rc.4`
 - `sentry/sentry-laravel`
+- `dyrynda/laravel-model-uuid`
 - `sempro/phpunit-pretty-print` (dev)
 - `sensiolabs/security-checker` (dev)
 

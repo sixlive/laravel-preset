@@ -37,6 +37,7 @@ class Preset extends BasePreset
             'bensampo/laravel-enum',
             'silber/bouncer:v1.0.0-rc.4',
             'sentry/sentry-laravel',
+            'dyrynda/laravel-model-uuid',
         ];
 
         static::runCommand('composer require '. implode(' ', $packages));
