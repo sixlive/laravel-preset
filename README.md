@@ -5,12 +5,12 @@ I figured rather than having a base repository with Laravel already installed it
 ![kapture](.docs/kapture.gif)
 
 **Requires the following composer packages:**
-- `bensampo/laravel-enum`
-- `silber/bouncer:v1.0.0-rc.4`
-- `sentry/sentry-laravel`
-- `dyrynda/laravel-model-uuid`
-- `sempro/phpunit-pretty-print` (dev)
-- `sensiolabs/security-checker` (dev)
+- [bensampo/laravel-enum](https://github.com/BenSampo/laravel-enum)
+- [silber/bouncer:v1.0.0-rc.4](https://github.com/JosephSilber/bouncer)
+- [sentry/sentry-laravel](https://github.com/getsentry/sentry-laravel)
+- [dyrynda/laravel-model-uuid](https://github.com/michaeldyrynda/laravel-model-uuid)
+- [sempro/phpunit-pretty-print](https://github.com/sempro/phpunit-pretty-print) (dev)
+- [sensiolabs/security-checker](https://github.com/sensiolabs/security-checker) (dev)
 
 **Publishes stubs:**
 - `phpunit.xml`
@@ -30,6 +30,8 @@ I figured rather than having a base repository with Laravel already installed it
 - [ ] Implement front end config from [adamwathan/laravel-preset](https://github.com/adamwathan/laravel-preset)
 
 ## Installation
+**Note:** It is assumed that this is being ran on a fresh installation of Laravel.
+
 This package isn't on Packagist, so to get started, add it as a repository to your `composer.json` file:
 
 ```json
