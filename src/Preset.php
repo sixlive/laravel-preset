@@ -29,6 +29,10 @@ class Preset extends BasePreset
         $command->task('Regenerate composer autoload file', function () {
             static::runCommand('composer dumpautoload');
         });
+
+        if($command->confirm('Install Tailwindcss', true)) {
+            static::addTailwindcss($command);
+        }
     }
 
     public static function updateComposerPackages()
@@ -89,5 +93,12 @@ class Preset extends BasePreset
     private static function runCommand($command)
     {
         return exec(sprintf('%s 2>&1', $command));
+    }
+
+    public static function addTailwindcss($command)
+    {
+        TailwindPreset::install();
+
+        $command->info('Please run "yarn && yarn dev" to compile your fresh scaffolding.');
     }
 }
