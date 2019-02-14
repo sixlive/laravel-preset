@@ -96,7 +96,7 @@ class Preset extends BasePreset
         $possiblePackages = $this->packages();
 
         $choices = $this->command->choice(
-            'Which packages should be installed? (e.x. 1,2)',
+            'Which optional packages should be installed? (e.x. 1,2)',
             ['all'] + $possiblePackages,
             '0',
             null,
