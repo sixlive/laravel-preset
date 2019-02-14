@@ -60,10 +60,13 @@ class Preset extends BasePreset
 
     private function gatherOptions()
     {
-        $this->options = [
-            'packages' => $this->promptForPackagesToInstall(),
-            'remove_after_install' => $this->command->confirm('Remove sixlive/laravel-preset after install?'),
-        ];
+        $this->command->line('');
+        $this->command->warn('Optional packages:');
+        $this->options['packages'] = $this->promptForPackagesToInstall();
+
+        $this->command->line('');
+        $this->command->warn('Misc. options:');
+        $this->options['remove_after_install'] = $this->command->confirm('Remove sixlive/laravel-preset after install?');
     }
 
     private function promptForPackagesToInstall()
