@@ -2,49 +2,87 @@
 
 namespace sixlive\LaravelPreset;
 
+use Illuminate\Support\Collection;
 use Illuminate\Filesystem\Filesystem;
 use sixlive\DotenvEditor\DotenvEditor;
 use Illuminate\Foundation\Console\Presets\Preset as BasePreset;
 
 class Preset extends BasePreset
 {
+    protected $command;
+    protected $options = [];
+
+    public function __construct($command)
+    {
+        $this->command = $command;
+    }
+
     public static function install($command)
     {
-        $command->task('Install composer dependencies', function () {
-            return static::updateComposerPackages();
+        $preset = new static($command);
+
+        $preset->run();
+    }
+
+    public function run()
+    {
+        $this->gatherOptions();
+
+        if (!empty($this->options['packages'])) {
+            $this->command->task('Install composer dependencies', function () {
+                return $this->updateComposerPackages();
+            });
+        }
+
+        $this->command->task('Install composer dev-dependencies', function () {
+            return $this->updateComposerDevPackages();
         });
 
-        $command->task('Install composer dev-dependencies', function () {
-            return static::updateComposerDevPackages();
+        $this->command->task('Publish stubs', function () {
+            $this->publishStubs();
         });
 
-        $command->task('Publish stubs', function () {
-            static::publishStubs();
+        $this->command->task('Update ENV files', function () {
+            $this->updateEnvFile();
         });
 
-        $command->task('Update ENV files', function () {
-            static::updateEnvFile();
-        });
-
-        $command->task('Regenerate composer autoload file', function () {
-            static::runCommand('composer dumpautoload');
+        $this->command->task('Regenerate composer autoload file', function () {
+            $this->runCommand('composer dumpautoload');
         });
     }
 
-    public static function updateComposerPackages()
+    private function gatherOptions()
     {
-        $packages = [
+        $this->options = [
+            'packages' => $this->promptForPackagesToInstall(),
+        ];
+    }
+
+    private function promptForPackagesToInstall()
+    {
+        $possiblePackages = [
             'bensampo/laravel-enum',
             'silber/bouncer:v1.0.0-rc.4',
             'sentry/sentry-laravel',
             'dyrynda/laravel-model-uuid',
         ];
 
-        static::runCommand('composer require '. implode(' ', $packages));
+        return Collection::make($possiblePackages)
+            ->filter(function ($package) {
+                return $this->command->confirm("Install {$package}?", true);
+            })
+            ->toArray();
+    }
+
+    private function updateComposerPackages()
+    {
+        static::runCommand(
+            'composer require'.implode(' ', $this->options['packages'])
+        );
     }
 
 
-    public static function updateComposerDevPackages()
+    private function updateComposerDevPackages()
     {
         $packages = [
             'sempro/phpunit-pretty-print',
@@ -54,39 +92,47 @@ class Preset extends BasePreset
         static::runCommand('composer require --dev '. implode(' ', $packages));
     }
 
-    public static function publishStubs()
+    private function publishStubs()
     {
         copy(__DIR__.'/stubs/Model.php', app_path('Model.php'));
         copy(__DIR__.'/stubs/phpunit.xml', base_path('phpunit.xml'));
+        copy(__DIR__.'/stubs/.php_cs', base_path('.php_cs'));
         copy(__DIR__.'/stubs/docker-compose.yml', base_path('docker-compose.yml'));
-        copy(__DIR__.'/stubs/BouncerSeeder.php', database_path('seeds/BouncerSeeder.php'));
+
+        if (in_array('silber/bouncer:v1.0.0-rc.4', $this->options['packages'])) {
+            copy(__DIR__.'/stubs/BouncerSeeder.php', database_path('seeds/BouncerSeeder.php'));
+        }
+
         tap(new Filesystem, function ($files) {
             $files->copyDirectory(__DIR__.'/stubs/.docker', base_path('.docker'));
         });
     }
 
-    public static function updateEnvFile()
+    private function updateEnvFile()
     {
-        $editor = new DotenvEditor;
-        $editor->load(base_path('.env'));
-        $editor->set('DB_PORT', '3307');
-        $editor->heading('Docker');
-        $editor->set('DOCKER_WEB_PORT', '8080');
-        $editor->set('DOCKER_MYSQL_PORT', '3307');
-        $editor->save();
+        tap(new DotenvEditor, function ($editor) {
+            $editor->load(base_path('.env'));
+            $editor->set('DB_PORT', '3307');
+            $editor->heading('Docker');
+            $editor->set('DOCKER_WEB_PORT', '8080');
+            $editor->set('DOCKER_MYSQL_PORT', '3307');
+            $editor->save();
+        });
 
-        $editor = new DotenvEditor;
-        $editor->load(base_path('.env.example'));
-        $editor->set('DB_PORT', '3307');
-        $editor->set('SENTRY_DSN', '');
-        $editor->addEmptyLine();
-        $editor->heading('Docker');
-        $editor->set('DOCKER_WEB_PORT', '8080');
-        $editor->set('DOCKER_MYSQL_PORT', '3307');
-        $editor->save();
+        tap(new DotenvEditor, function ($editor) {
+            $editor = new DotenvEditor;
+            $editor->load(base_path('.env.example'));
+            $editor->set('DB_PORT', '3307');
+            $editor->set('SENTRY_DSN', '');
+            $editor->addEmptyLine();
+            $editor->heading('Docker');
+            $editor->set('DOCKER_WEB_PORT', '8080');
+            $editor->set('DOCKER_MYSQL_PORT', '3307');
+            $editor->save();
+        });
     }
 
-    private static function runCommand($command)
+    private function runCommand($command)
     {
         return exec(sprintf('%s 2>&1', $command));
     }
