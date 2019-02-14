@@ -5,7 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 ### Added
-* Prompt for packages
+* Prompt for packages ([#2](https://github.com/sixlive/laravel-preset/pull/2))
 
 ### Changed
-* Changed docker run script to check for the `BouncerSeeder`
+* Changed docker run script to check for the `BouncerSeeder` ([#2](https://github.com/sixlive/laravel-preset/pull/2))
+

@@ -32,18 +32,6 @@ I figured rather than having a base repository with Laravel already installed it
 ## Installation
 **Note:** It is assumed that this is being ran on a fresh installation of Laravel.
 
-This package isn't on Packagist, so to get started, add it as a repository to your `composer.json` file:
-
-```json
-"repositories": [
-    {
-        "type": "vcs",
-        "url": "https://github.com/sixlive/laravel-preset"
-    }
-]
-```
-
-
 You can install the package via composer:
 
 ```bash
