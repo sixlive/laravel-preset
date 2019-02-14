@@ -5,10 +5,10 @@ I figured rather than having a base repository with Laravel already installed it
 ![kapture](.docs/kapture.gif)
 
 **Requires the following composer packages:**
-- [bensampo/laravel-enum](https://github.com/BenSampo/laravel-enum)
-- [silber/bouncer:v1.0.0-rc.4](https://github.com/JosephSilber/bouncer)
-- [sentry/sentry-laravel](https://github.com/getsentry/sentry-laravel)
-- [dyrynda/laravel-model-uuid](https://github.com/michaeldyrynda/laravel-model-uuid)
+- [bensampo/laravel-enum](https://github.com/BenSampo/laravel-enum) - optional
+- [silber/bouncer:v1.0.0-rc.4](https://github.com/JosephSilber/bouncer) - optional
+- [sentry/sentry-laravel](https://github.com/getsentry/sentry-laravel) - optional
+- [dyrynda/laravel-model-uuid](https://github.com/michaeldyrynda/laravel-model-uuid) - optional
 - [sempro/phpunit-pretty-print](https://github.com/sempro/phpunit-pretty-print) (dev)
 - [sensiolabs/security-checker](https://github.com/sensiolabs/security-checker) (dev)
 
@@ -19,12 +19,12 @@ I figured rather than having a base repository with Laravel already installed it
 - `app/Model.php` - A base model setup to bypass mass assignment
 - `.docker/` and `docker-compose.yml`
     - A simple docker development configuration
-- `database/seeds/BouncerSeeder.php` - Bouncer permissions seeder
+- `database/seeds/BouncerSeeder.php` - Bouncer permissions seeder (only if you included the package)
 
 **Updates the ENV files:**
 - Changes `DB_PORT` to match the docker configuration for `.env` and `.env.example`
 - Adds docker configuration to `.env` and `.env.example`
-- Adds `SENTRY_DSN` to `.env.example
+- Adds `SENTRY_DSN` to `.env` and `.env.example` (only if you included the package)
 
 **To Do:**
 - [ ] Implement front end config from [adamwathan/laravel-preset](https://github.com/adamwathan/laravel-preset)
