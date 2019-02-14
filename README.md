@@ -20,6 +20,8 @@ I figured rather than having a base repository with Laravel already installed it
 - `.docker/` and `docker-compose.yml`
     - A simple docker development configuration
 - `database/seeds/BouncerSeeder.php` - Bouncer permissions seeder (only if you included the package)
+- `.php_cs`
+- `.editorconfig`
 
 **Updates the ENV files:**
 - Changes `DB_PORT` to match the docker configuration for `.env` and `.env.example`

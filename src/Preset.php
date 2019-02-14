@@ -156,6 +156,7 @@ class Preset extends BasePreset
         copy(__DIR__.'/stubs/Model.php', app_path('Model.php'));
         copy(__DIR__.'/stubs/phpunit.xml', base_path('phpunit.xml'));
         copy(__DIR__.'/stubs/.php_cs', base_path('.php_cs'));
+        copy(__DIR__.'/stubs/.editorconfig', base_path('.editorconfig'));
         copy(__DIR__.'/stubs/docker-compose.yml', base_path('docker-compose.yml'));
 
         if (in_array('silber/bouncer:v1.0.0-rc.4', $this->options['packages'])) {
