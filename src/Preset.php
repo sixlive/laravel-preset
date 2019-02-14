@@ -49,12 +49,20 @@ class Preset extends BasePreset
         $this->command->task('Regenerate composer autoload file', function () {
             $this->runCommand('composer dumpautoload');
         });
+
+        if ($this->options['remove_after_install']) {
+            $this->command->task('Remove sixlive/laravel-preset', function () {
+                $this->runCommand('composer remove sixlive/laravel-preset');
+                $this->runCommand('composer dumpautoload');
+            });
+        }
     }
 
     private function gatherOptions()
     {
         $this->options = [
             'packages' => $this->promptForPackagesToInstall(),
+            'remove_after_install' => $this->command->confirm('Remove sixlive/laravel-preset after install?'),
         ];
     }
 
@@ -76,11 +84,10 @@ class Preset extends BasePreset
 
     private function updateComposerPackages()
     {
-        static::runCommand(
+        $this->runCommand(
             'composer require'.implode(' ', $this->options['packages'])
         );
     }
-
 
     private function updateComposerDevPackages()
     {
@@ -89,7 +96,7 @@ class Preset extends BasePreset
             'sensiolabs/security-checker',
         ];
 
-        static::runCommand('composer require --dev '. implode(' ', $packages));
+        $this->runCommand('composer require --dev '. implode(' ', $packages));
     }
 
     private function publishStubs()
