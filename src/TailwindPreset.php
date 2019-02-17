@@ -15,11 +15,7 @@ class TailwindPreset extends BasePreset {
         static::updateWebpackConfiguration();
         static::updateTemplates();
         static::removeNodeModules();
-
-        $command->info('Tailwind has installed.');
-        $command->info('Create Tailwind config file "./node_modules/.bin/tailwind init [filename]" to compile your tailwindcss installation.');
     }
-
 
     protected static function updatePackageArray(array $packages)
     {

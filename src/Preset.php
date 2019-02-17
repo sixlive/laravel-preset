@@ -73,9 +73,21 @@ class Preset extends BasePreset
             $this->runCommand('composer dumpautoload');
         });
 
-        if($command->confirm('Install Tailwindcss', true)) {
-            static::addTailwindcss($command);
+        if($this->command->confirm('Install Tailwindcss', true)) {
+            static::addTailwindcss($this->command);
         }
+
+        $this->command->task('yarn install', function () {
+            $this->runCommand('yarn install');
+        });
+
+        $this->command->task('Setup Tailwindcss', function () {
+            $this->runCommand('yarn install');
+        });
+
+        $this->command->task('yarn dev', function () {
+            $this->runCommand('yarn dev');
+        });
 
         if ($this->options['remove_after_install']) {
             $this->command->task('Remove sixlive/laravel-preset', function () {
@@ -207,11 +219,12 @@ class Preset extends BasePreset
         return exec(sprintf('%s 2>&1', $command));
     }
 
-    public static function addTailwindcss($command)
+    private function addTailwindcss()
     {
         TailwindPreset::install();
 
-        $command->info('Please run "yarn && yarn dev" to compile your fresh scaffolding.');
+        $this->command->info('Tailwind has installed.');
+    }
 
     private function getInstalledPackages()
     {
