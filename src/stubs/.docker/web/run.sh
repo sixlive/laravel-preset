@@ -11,8 +11,10 @@ step() {
 step "Migrating the database"
 cd /var/www/html && php artisan migrate --force
 
-step "Seeding permissions"
-cd /var/www/html && php artisan db:seed --class=BouncerSeeder
+if [ -f /var/www/html/database/seeds/BouncerSeeder.php ]; then
+    step "Seeding permissions"
+    cd /var/www/html && php artisan db:seed --class=BouncerSeeder
+fi
 
 step "Starting Apache"
 authbind --deep /usr/local/bin/apache2-foreground
