@@ -75,19 +75,19 @@ class Preset extends BasePreset
 
         if($this->command->confirm('Install Tailwindcss', true)) {
             static::addTailwindcss($this->command);
+
+            $this->command->task('yarn install', function () {
+                $this->runCommand('yarn install');
+            });
+
+            $this->command->task('Setup Tailwindcss', function () {
+                $this->runCommand('yarn install');
+            });
+
+            $this->command->task('yarn dev', function () {
+                $this->runCommand('yarn dev');
+            });
         }
-
-        $this->command->task('yarn install', function () {
-            $this->runCommand('yarn install');
-        });
-
-        $this->command->task('Setup Tailwindcss', function () {
-            $this->runCommand('yarn install');
-        });
-
-        $this->command->task('yarn dev', function () {
-            $this->runCommand('yarn dev');
-        });
 
         if ($this->options['remove_after_install']) {
             $this->command->task('Remove sixlive/laravel-preset', function () {
