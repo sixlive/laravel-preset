@@ -83,7 +83,7 @@ class Preset extends BasePreset
             });
 
             $this->command->task('Setup Tailwindcss', function () {
-                $this->runCommand('yarn install');
+                $this->runCommand('yarn tailwind init');
             });
 
             $this->command->task('yarn dev', function () {
