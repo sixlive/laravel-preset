@@ -73,7 +73,7 @@ class Preset extends BasePreset
             $this->runCommand('composer dumpautoload');
         });
 
-        if($this->command->confirm('Install Tailwindcss', true)) {
+        if($this->command->confirm('Install Tailwindcss?', true)) {
             static::addTailwindcss($this->command);
 
             $this->command->task('yarn install', function () {
