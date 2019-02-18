@@ -74,7 +74,9 @@ class Preset extends BasePreset
         });
 
         if($this->command->confirm('Install Tailwindcss?', true)) {
-            static::addTailwindcss($this->command);
+           $this->command->task('Install Tailwindcss', function () {
+               TailwindPreset::install();
+           });
 
             $this->command->task('yarn install', function () {
                 $this->runCommand('yarn install');
