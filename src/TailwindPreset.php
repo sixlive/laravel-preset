@@ -3,12 +3,10 @@
 namespace sixlive\LaravelPreset;
 
 use Illuminate\Filesystem\Filesystem;
-use sixlive\DotenvEditor\DotenvEditor;
 use Illuminate\Foundation\Console\Presets\Preset as BasePreset;
 
 class TailwindPreset extends BasePreset
 {
-
     public static function install()
     {
         static::ensureComponentDirectoryExists();
@@ -35,12 +33,12 @@ class TailwindPreset extends BasePreset
             $files->deleteDirectory(resource_path('sass'));
             $files->delete(public_path('css/app.css'));
 
-            if (!$files->isDirectory($directory = resource_path('css'))) {
+            if (! $files->isDirectory($directory = resource_path('css'))) {
                 $files->makeDirectory($directory, 0755, true);
             }
         });
 
-        copy(__DIR__ . '/stubs/resources/css/app.css', resource_path('css/app.css'));
+        copy(__DIR__.'/stubs/resources/css/app.css', resource_path('css/app.css'));
     }
 
     protected static function updateTemplates()
@@ -48,12 +46,12 @@ class TailwindPreset extends BasePreset
         tap(new Filesystem, function ($files) {
             $files->delete(resource_path('views/home.blade.php'));
             $files->delete(resource_path('views/welcome.blade.php'));
-            $files->copyDirectory(__DIR__ . '/stubs/resources/views', resource_path('views'));
+            $files->copyDirectory(__DIR__.'/stubs/resources/views', resource_path('views'));
         });
     }
 
     protected static function updateWebpackConfiguration()
     {
-        copy(__DIR__ . '/stubs/webpack.mix.js', base_path('webpack.mix.js'));
+        copy(__DIR__.'/stubs/webpack.mix.js', base_path('webpack.mix.js'));
     }
 }
