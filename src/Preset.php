@@ -78,7 +78,7 @@ class Preset extends BasePreset
                TailwindPreset::install();
            });
 
-            $this->command->task('yarn install', function () {
+            $this->command->task('Install node dependencies with Yarn', function () {
                 $this->runCommand('yarn install');
             });
 
