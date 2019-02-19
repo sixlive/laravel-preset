@@ -4,7 +4,8 @@ I figured rather than having a base repository with Laravel already installed it
 
 ![kapture](.docs/kapture.gif)
 
-**Requires the following composer packages:**
+## Overview
+### Composer Packages
 - [bensampo/laravel-enum](https://github.com/BenSampo/laravel-enum) - optional
 - [silber/bouncer:v1.0.0-rc.4](https://github.com/JosephSilber/bouncer) - optional
 - [sentry/sentry-laravel](https://github.com/getsentry/sentry-laravel) - optional
@@ -12,7 +13,7 @@ I figured rather than having a base repository with Laravel already installed it
 - [sempro/phpunit-pretty-print](https://github.com/sempro/phpunit-pretty-print) (dev)
 - [sensiolabs/security-checker](https://github.com/sensiolabs/security-checker) (dev)
 
-**Publishes stubs:**
+### Stubs
 - `phpunit.xml`
     - Adds `APP_KEY`
     - Configures sqlite in-memory database
@@ -23,13 +24,23 @@ I figured rather than having a base repository with Laravel already installed it
 - `.php_cs`
 - `.editorconfig`
 
-**Updates the ENV files:**
+### ENV Changes
 - Changes `DB_PORT` to match the docker configuration for `.env` and `.env.example`
 - Adds docker configuration to `.env` and `.env.example`
 - Adds `SENTRY_DSN` to `.env` and `.env.example` (only if you included the package)
 
-**To Do:**
-- [ ] Implement front end config from [adamwathan/laravel-preset](https://github.com/adamwathan/laravel-preset)
+### Tailwindcss
+- Adds these node packages:
+    - laravel-mix-purgecss:^2.2.0
+    - postcss-nesting:^5.0.0
+    - postcss-import:^11.1.0
+    - tailwindcss:>=0.6.1
+- Removes the `sass` directory
+- Removes `app.css`
+- Publishes
+    - Tailwind `app.css` template
+    - An updated welcome blade template
+    - An updated `webpack.mix.js`
 
 ## Installation
 **Note:** It is assumed that this is being ran on a fresh installation of Laravel.
