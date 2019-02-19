@@ -114,15 +114,21 @@ class Preset extends BasePreset
 
         $choices = $this->command->choice(
             'Which optional packages should be installed? (e.x. 1,2)',
-            ['all'] + $possiblePackages,
+            array_merge(['all'], $possiblePackages, ['none']),
             '0',
             null,
             true
         );
 
-        return in_array('all', $choices)
-            ? $possiblePackages
-            : $choices;
+        if (in_array('all', $choices)) {
+            return $possiblePackages;
+        }
+
+        if (in_array('none', $choices)) {
+            return [];
+        }
+
+        return $choices;
     }
 
     private function updateComposerPackages()
