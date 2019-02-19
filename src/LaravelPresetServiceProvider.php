@@ -11,8 +11,6 @@ class LaravelPresetServiceProvider extends ServiceProvider
     {
         PresetCommand::macro('sixlive', function ($command) {
             Preset::install($command);
-            // $command->info('Preset installed successfully.');
-            // $command->info('Please run "npm install && npm run dev" to compile your fresh scaffolding.');
         });
     }
 }
