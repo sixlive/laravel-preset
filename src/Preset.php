@@ -73,10 +73,10 @@ class Preset extends BasePreset
             $this->runCommand('composer dumpautoload');
         });
 
-        if($this->command->confirm('Install Tailwindcss?', true)) {
-           $this->command->task('Install Tailwindcss', function () {
-               TailwindPreset::install();
-           });
+        if ($this->command->confirm('Install Tailwindcss?', true)) {
+            $this->command->task('Install Tailwindcss', function () {
+                TailwindPreset::install();
+            });
 
             $this->command->task('Install node dependencies with Yarn', function () {
                 $this->runCommand('yarn install');
@@ -130,7 +130,7 @@ class Preset extends BasePreset
     {
         $this->runCommand(sprintf(
             'composer require %s',
-             $this->resolveForComposer($this->options['packages'])
+            $this->resolveForComposer($this->options['packages'])
         ));
     }
 
@@ -155,7 +155,7 @@ class Preset extends BasePreset
         return Collection::make($packages)
             ->transform(function ($package) {
                 return isset($this->packages[$package]['version'])
-                    ? $package.':'.$this->packages[$package]['version']
+                    ? $package . ':' . $this->packages[$package]['version']
                     : $package;
             })
             ->implode(' ');
@@ -171,18 +171,18 @@ class Preset extends BasePreset
 
     private function publishStubs()
     {
-        copy(__DIR__.'/stubs/Model.php', app_path('Model.php'));
-        copy(__DIR__.'/stubs/phpunit.xml', base_path('phpunit.xml'));
-        copy(__DIR__.'/stubs/.php_cs', base_path('.php_cs'));
-        copy(__DIR__.'/stubs/.editorconfig', base_path('.editorconfig'));
-        copy(__DIR__.'/stubs/docker-compose.yml', base_path('docker-compose.yml'));
+        copy(__DIR__ . '/stubs/Model.php', app_path('Model.php'));
+        copy(__DIR__ . '/stubs/phpunit.xml', base_path('phpunit.xml'));
+        copy(__DIR__ . '/stubs/.php_cs', base_path('.php_cs'));
+        copy(__DIR__ . '/stubs/.editorconfig', base_path('.editorconfig'));
+        copy(__DIR__ . '/stubs/docker-compose.yml', base_path('docker-compose.yml'));
 
         if (in_array('silber/bouncer:v1.0.0-rc.4', $this->options['packages'])) {
-            copy(__DIR__.'/stubs/BouncerSeeder.php', database_path('seeds/BouncerSeeder.php'));
+            copy(__DIR__ . '/stubs/BouncerSeeder.php', database_path('seeds/BouncerSeeder.php'));
         }
 
         tap(new Filesystem, function ($files) {
-            $files->copyDirectory(__DIR__.'/stubs/.docker', base_path('.docker'));
+            $files->copyDirectory(__DIR__ . '/stubs/.docker', base_path('.docker'));
         });
     }
 
@@ -219,13 +219,6 @@ class Preset extends BasePreset
     private function runCommand($command)
     {
         return exec(sprintf('%s 2>&1', $command));
-    }
-
-    private function addTailwindcss()
-    {
-        TailwindPreset::install();
-
-        $this->command->info('Tailwind has installed.');
     }
 
     private function getInstalledPackages()
