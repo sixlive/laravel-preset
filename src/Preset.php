@@ -42,9 +42,7 @@ class Preset extends BasePreset
 
     public static function install($command)
     {
-        $preset = new static($command);
-
-        $preset->run();
+        (new static($command))->run();
     }
 
     public function run()
@@ -73,7 +71,7 @@ class Preset extends BasePreset
             $this->runCommand('composer dumpautoload');
         });
 
-        if ($this->command->confirm('Install Tailwindcss?', true)) {
+        if ($this->options['install_tailwind']) {
             $this->command->task('Install Tailwindcss', function () {
                 TailwindPreset::install();
             });
@@ -105,6 +103,7 @@ class Preset extends BasePreset
     {
         return [
             'packages' => $this->promptForPackagesToInstall(),
+            'install_tailwind' => $this->command->confirm('Install Tailwindcss?', true),
             'remove_after_install' => $this->command->confirm('Remove sixlive/laravel-preset after install?', true),
         ];
     }
